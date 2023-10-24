@@ -1,5 +1,5 @@
 import {Button} from "@material-tailwind/react";
-import {gql, useMutation} from '@apollo/client';
+import {useMutation} from '@apollo/client';
 import {NavLink} from "react-router-dom"
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -7,17 +7,7 @@ import {useForm} from 'react-hook-form';
 import {toast} from "react-toastify";
 import Input from "../components/Input.tsx";
 import {useEffect, useState} from "react";
-
-const LOGIN = gql`
-    mutation Login($input: LoginInput!) {
-        login(input: $input) {
-            ... on Login {
-                token
-                message
-            }
-        }
-    }
-`;
+import {LOGIN} from "../graphql/mutations.ts";
 
 type LoginInput = {
   email: string;

@@ -1,4 +1,4 @@
-import {gql, useMutation} from "@apollo/client";
+import {useMutation} from "@apollo/client";
 import {Button} from "@material-tailwind/react";
 import {NavLink} from "react-router-dom";
 import * as Yup from 'yup';
@@ -6,16 +6,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import Input from "../components/Input.tsx";
 import {toast} from "react-toastify";
-
-const REGISTER = gql`
-    mutation Register($input: RegisterInput!) {
-        register(input: $input) {
-            ... on Register {
-                message
-            }
-        }
-    }
-`;
+import {REGISTER} from "../graphql/mutations.ts";
 
 type RegisterInput = {
   email: string;

@@ -3,22 +3,11 @@ import {Button} from "@material-tailwind/react";
 import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
-import {gql, useMutation} from "@apollo/client";
+import {useMutation} from "@apollo/client";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {CREATE_ROOM} from "../graphql/mutations.ts";
 
-const CREATE_ROOM = gql`
-    mutation CreateRoom($input: RoomCreatedInput!) {
-        createRoom(input: $input) {
-            ... on RoomCreated {
-                entity {
-                    name
-                    isPrivate
-                }
-            }
-        }
-    }
-`;
 export default function CreateRoom() {
 
   const [createRoom] = useMutation(CREATE_ROOM);

@@ -1,23 +1,12 @@
-import {gql, useQuery} from "@apollo/client";
+import {useQuery} from "@apollo/client";
 import {NavLink} from "react-router-dom";
+import {GET_ALL_ROOMS} from "../graphql/queries.ts";
 
 type Room = {
   _id: string;
   name: string;
+  isPrivate: boolean;
 }
-
-const GET_ALL_ROOMS = gql`
-    query GetAllRooms($sort: SortInput) {
-        getAllRooms(sort: $sort) {
-            ... on Rooms {
-                entities {
-                    _id
-                    name
-                }
-            }
-        }
-    }
-`;
 
 export default function RoomList() {
 
@@ -29,12 +18,14 @@ export default function RoomList() {
   return (
       <div>
         <h1>RoomList</h1>
-        {data.getAllRooms.entities.map((room: Room) => (
-            <>
-              <NavLink key={room._id} to={`/room/${room._id}`}>{room.name}</NavLink>
-              <br/>
-            </>
-        ))}
+        {data.getAllRooms.entities && data.getAllRooms.entities
+            .filter((room: Room) => !room.isPrivate)
+            .map((room: Room) => (
+                <div key={room._id}>
+                  <NavLink to={`/room/${room._id}`}>{room.name}</NavLink>
+                  <br/>
+                </div>
+            ))}
       </div>
   )
 }
