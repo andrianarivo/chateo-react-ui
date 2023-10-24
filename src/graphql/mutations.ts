@@ -5,6 +5,7 @@ export const CREATE_ROOM = gql`
         createRoom(input: $input) {
             ... on RoomCreated {
                 entity {
+                    _id
                     name
                     isPrivate
                 }
@@ -29,6 +30,24 @@ export const REGISTER = gql`
         register(input: $input) {
             ... on Register {
                 message
+            }
+        }
+    }
+`;
+
+export const CREATE_MESSAGE = gql`
+    mutation CreateMessage($input: MessageCreatedInput!) {
+        createMessage(input: $input) {
+            ... on MessageCreated {
+                entity {
+                    _id
+                    author {
+                        _id
+                        firstname
+                    }
+                    content
+                    room
+                }
             }
         }
     }

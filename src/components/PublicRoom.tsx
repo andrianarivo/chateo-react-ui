@@ -1,8 +1,9 @@
 import {useParams} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_MESSAGES_BY_ROOM_ID} from "../graphql/queries.ts";
+import CreateMessage from "./CreateMessage.tsx";
 
-type Message = {
+export type Message = {
   _id: string;
   content: string;
   author: {
@@ -30,6 +31,8 @@ export default function PublicRoom() {
                 </div>
             )
         )}
+
+        <CreateMessage room={params.id}/>
       </div>
   )
 }
