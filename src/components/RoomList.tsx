@@ -31,7 +31,7 @@ export default function RoomList() {
         <h1>RoomList</h1>
         {data.getAllRooms.entities.map((room: Room) => (
             <>
-              <NavLink key={room._id} to={`/room/${room.name}`}>{room.name}</NavLink>
+              <NavLink key={room._id} to={`/room/${room._id}`}>{room.name}</NavLink>
               <br/>
             </>
         ))}
