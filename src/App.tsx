@@ -7,7 +7,8 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Home from "./pages/Home.tsx";
 import {setContext} from "@apollo/client/link/context";
-import Room from "./components/Room.tsx";
+import PublicRoom from "./components/PublicRoom.tsx";
+import PrivateRoom from "./components/PrivateRoom.tsx";
 
 const httpLink = createHttpLink({
   uri: import.meta.env.VITE_GRAPHQL_URI,
@@ -38,7 +39,8 @@ function App() {
           <ApolloProvider client={client}>
             <Routes>
               <Route path="/" element={<Home/>}>
-                <Route path="/room/:name" element={<Room/>}/>
+                <Route path="/room/:name" element={<PublicRoom/>}/>
+                <Route path="/user/:id" element={<PrivateRoom/>}/>
               </Route>
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>

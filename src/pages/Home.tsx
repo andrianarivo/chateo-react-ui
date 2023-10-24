@@ -2,6 +2,7 @@ import useSession from "../hooks/useSession.ts";
 import CreateRoom from "../components/CreateRoom.tsx";
 import RoomList from "../components/RoomList.tsx";
 import {Outlet} from "react-router-dom";
+import UserList from "../components/UserList.tsx";
 
 export default function Home() {
   useSession();
@@ -14,7 +15,7 @@ export default function Home() {
                className="text-3xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Brand</a>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 hover:underline">Admin</p>
           </div>
-
+          <UserList/>
           <CreateRoom/>
           <RoomList/>
         </aside>

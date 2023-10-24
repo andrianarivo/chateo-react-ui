@@ -54,13 +54,13 @@ export default function CreateRoom() {
       throw err;
     }), {
       pending: 'loading...',
-      success: 'Room created',
+      success: 'PublicRoom created',
       error: 'Error creating room'
     });
   }
   return (
       <form onSubmit={handleSubmit(_createRoom)}>
-        <Input register={register} name="name" placeholder="Room name" type="text"/>
+        <Input register={register} name="name" placeholder="PublicRoom name" type="text"/>
         <div className="text-red-500 text-xs">
           {errors.name?.message}
         </div>
