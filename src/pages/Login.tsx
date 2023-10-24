@@ -6,6 +6,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import {toast} from "react-toastify";
 import Input from "../components/Input.tsx";
+import {useEffect, useState} from "react";
 
 const LOGIN = gql`
     mutation Login($input: LoginInput!) {
@@ -26,6 +27,7 @@ type LoginInput = {
 export default function Login() {
 
   const [login] = useMutation(LOGIN);
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required(),
     password: Yup.string().required(),
@@ -36,6 +38,8 @@ export default function Login() {
   const {register, handleSubmit, formState} = useForm(formOptions);
 
   const {errors} = formState;
+
+  const [authenticated, setAuthenticated] = useState(false)
 
   const _login = (data: LoginInput) => {
     toast.promise(
@@ -49,6 +53,7 @@ export default function Login() {
         }).then((res) => {
           if (res.data.login.token) {
             localStorage.setItem("token", res.data.login.token);
+            setAuthenticated(true);
           } else {
             throw Error();
           }
@@ -60,6 +65,12 @@ export default function Login() {
         },
     );
   };
+
+  useEffect(() => {
+    if (!authenticated) {
+      localStorage.removeItem("token");
+    }
+  });
 
   return (
       <div className="flex flex-col items-center justify-center h-screen">
