@@ -1,33 +1,17 @@
 import './App.css'
-import {ApolloClient, ApolloProvider, createHttpLink, InMemoryCache} from "@apollo/client";
+import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
 import Login from "./pages/Login.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Register from "./pages/Register.tsx";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Home from "./pages/Home.tsx";
-import {setContext} from "@apollo/client/link/context";
 import PublicRoom from "./components/PublicRoom.tsx";
 import PrivateRoom from "./components/PrivateRoom.tsx";
-
-const httpLink = createHttpLink({
-  uri: import.meta.env.VITE_GRAPHQL_URI,
-});
-
-const authLink = setContext((_, {headers}) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    }
-  }
-});
+import {splitLink} from "./graphql/link.ts";
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache(),
 });
 

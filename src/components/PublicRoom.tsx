@@ -1,7 +1,9 @@
 import {useParams} from "react-router-dom";
-import {useQuery} from "@apollo/client";
+import {useLazyQuery, useSubscription} from "@apollo/client";
 import {GET_MESSAGES_BY_ROOM_ID} from "../graphql/queries.ts";
 import CreateMessage from "./CreateMessage.tsx";
+import {MESSAGE_FEED} from "../graphql/subscriptions.ts";
+import {useEffect, useState} from "react";
 
 export type Message = {
   _id: string;
@@ -17,7 +19,24 @@ export type Message = {
 export default function PublicRoom() {
 
   const params = useParams();
-  const {loading, error, data} = useQuery(GET_MESSAGES_BY_ROOM_ID, {variables: {room: params.id}});
+  const [getMessagesByRoomId, {
+    loading,
+    error,
+  }] = useLazyQuery(GET_MESSAGES_BY_ROOM_ID, {variables: {room: params.id}});
+  const messageFeed = useSubscription(MESSAGE_FEED);
+  const [messages, setMessages] = useState<Message[]>([])
+
+  useEffect(() => {
+    if (messageFeed.data) {
+      setMessages((messages: Message[]) => [...messages, messageFeed.data.messageCreated.entity]);
+    }
+  }, [messageFeed.data])
+
+  useEffect(() => {
+    getMessagesByRoomId().then((res) => {
+      setMessages(res.data.getMessagesByRoom.entities);
+    });
+  }, []);
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -25,7 +44,7 @@ export default function PublicRoom() {
   return (
       <div>
         <h1>Public Room: {params.id}</h1>
-        {data.getMessagesByRoom.entities && data.getMessagesByRoom.entities.map((message: Message) => (
+        {messages.map((message: Message) => (
                 <div key={message._id}>
                   <p>{message.content}{" "}<em>by {message.author.firstname}</em></p>
                 </div>
