@@ -6,6 +6,7 @@ import {AuthContext} from "./ProtectedRoutes.tsx";
 import {Outlet, useNavigate} from "react-router-dom";
 import {useMutation} from "@apollo/client";
 import {LOGOUT} from "../graphql/mutations.ts";
+import speak from "../assets/speak.png";
 
 export default function Home() {
   const [logout] = useMutation(LOGOUT);
@@ -17,6 +18,7 @@ export default function Home() {
               <aside
                   className="flex flex-col items-center gap-4 overflow-y-auto overflow-x-hidden w-64 h-screen px-4 py-8 bg-white border-r dark:bg-gray-800 dark:border-gray-600 shadow-lg scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#f7ab0a]/80">
                 <div className="flex flex-col items-center justify-center">
+                  <img src={speak} alt="chateo! logo" width="75"/>
                   <Typography
                       className="text-3xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
                     Chateo!

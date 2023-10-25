@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import {NavLink} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import {GET_ALL_ROOMS} from "../graphql/queries.ts";
 import {List, ListItem, ListItemPrefix, Typography} from "@material-tailwind/react";
 
@@ -12,6 +12,7 @@ export type Room = {
 export default function RoomList() {
 
   const {loading, error, data} = useQuery(GET_ALL_ROOMS);
+  const params = useParams();
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -27,7 +28,8 @@ export default function RoomList() {
               .map((room: Room) => (
                   <div key={room._id}>
                     <NavLink to={`/room/${room._id}`}>
-                      <ListItem>
+                      <ListItem
+                          selected={params.id === room._id}>
                         <ListItemPrefix>
                           <svg
                               xmlns="http://www.w3.org/2000/svg"

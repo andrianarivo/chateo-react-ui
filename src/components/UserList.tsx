@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_ALL_USERS} from "../graphql/queries.ts";
 import {List, ListItem, ListItemPrefix, Typography} from "@material-tailwind/react";
@@ -15,6 +15,7 @@ type UserListProps = {
 export default function UserList({userData}: UserListProps) {
 
   const {loading, error, data} = useQuery(GET_ALL_USERS);
+  const params = useParams();
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -30,7 +31,8 @@ export default function UserList({userData}: UserListProps) {
               .map((user: User) => (
                   <div key={user._id}>
                     <NavLink to={`/user/${user._id}`}>
-                      <ListItem>
+                      <ListItem
+                          selected={params.id === user._id}>
                         <ListItemPrefix>
                           <svg
                               xmlns="http://www.w3.org/2000/svg"
