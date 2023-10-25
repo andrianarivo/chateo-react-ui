@@ -1,5 +1,5 @@
 import Input from "./Input.tsx";
-import {Button} from "@material-tailwind/react";
+import {IconButton} from "@material-tailwind/react";
 import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
@@ -57,7 +57,7 @@ export default function CreateRoom() {
           <ValidationMessage message={errors.name?.message}/>
         </div>
 
-        <Button color="blue" size="sm" ripple={true} type="submit">
+        <IconButton color="blue" size="sm" ripple={true} type="submit" className="self-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                className="bi bi-house-add" viewBox="0 0 16 16">
             <path
@@ -65,7 +65,7 @@ export default function CreateRoom() {
             <path
                 d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 1 0 1 0v-1h1a.5.5 0 1 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z"/>
           </svg>
-        </Button>
+        </IconButton>
       </form>
   )
 }
