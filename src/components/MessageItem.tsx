@@ -17,7 +17,7 @@ export default function MessageItem({message}: MessageProps) {
                 ' rounded-se-xl' +
                 ' rounded-s-xl' : 'bg-gray-400 rounded-ss-xl rounded-e-xl'}  px-3 py-1 my-1 text-white shadow-md`}>
           <Typography>
-            {message.content}{" "}
+            {message.content}
           </Typography>
           <Typography variant="small">
             <em>by {message.author.firstname}</em>
