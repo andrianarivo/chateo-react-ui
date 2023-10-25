@@ -3,13 +3,16 @@ import {useNavigate} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_ME} from "../graphql/queries.ts";
 
-export default function useSession() {
+type Session = {
+  userData: any;
+  token: string | null;
+}
+export default function useSession(): Session {
   const {data, error} = useQuery(GET_ME);
 
   const [token] = useState(() => {
     // getting stored value
-    const initialValue = localStorage.getItem('token');
-    return initialValue || null;
+    return localStorage.getItem('token');
   });
   const navigate = useNavigate();
 
@@ -30,6 +33,11 @@ export default function useSession() {
       userData: data.getMe.entity,
       token,
     }
+  }
+
+  return {
+    userData: null,
+    token,
   }
 
 }
