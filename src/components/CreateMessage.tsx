@@ -4,7 +4,6 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import {useMutation} from "@apollo/client";
 import {CREATE_MESSAGE} from "../graphql/mutations.ts";
-import {toast} from "react-toastify";
 import {AuthContext} from "../pages/ProtectedRoutes.tsx";
 import {useContext} from "react";
 import ValidationMessage from "./ValidationMessage.tsx";
@@ -31,22 +30,17 @@ export default function CreateMessage({room}: CreateMessageProps) {
   const {errors} = formState;
 
   const _createMessage = (data: any) => {
-    toast.promise(createMessage({
-          variables: {
-            input: {
-              content: data.content,
-              room: room,
-              author: userData?._id
-            }
-          }
-        }),
-        {
-          pending: 'loading...',
-          success: 'Message created',
-          error: 'Error creating message'
+    createMessage({
+      variables: {
+        input: {
+          content: data.content,
+          room: room,
+          author: userData?._id
         }
-    )
-    reset();
+      }
+    }).then(() => {
+      reset();
+    })
   }
 
   return (
