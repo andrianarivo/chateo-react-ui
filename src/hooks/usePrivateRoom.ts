@@ -3,11 +3,12 @@ import {useLazyQuery, useMutation} from "@apollo/client";
 import {GET_ROOM_BY_NAME} from "../graphql/queries.ts";
 import {toast} from "react-toastify";
 import {useEffect, useState} from "react";
+import {Room} from "../components/RoomList.tsx";
 
-export default function usePrivateRoom(roomName: string) {
+export default function usePrivateRoom(roomName: string): Room | undefined {
   const [createRoom] = useMutation(CREATE_ROOM);
   const [getRoomByName] = useLazyQuery(GET_ROOM_BY_NAME);
-  const [room, setRoom] = useState();
+  const [room, setRoom] = useState<Room>();
 
   useEffect(() => {
     getRoomByName({

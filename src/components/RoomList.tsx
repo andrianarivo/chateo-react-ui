@@ -2,7 +2,7 @@ import {useQuery} from "@apollo/client";
 import {NavLink} from "react-router-dom";
 import {GET_ALL_ROOMS} from "../graphql/queries.ts";
 
-type Room = {
+export type Room = {
   _id: string;
   name: string;
   isPrivate: boolean;

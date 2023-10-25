@@ -8,11 +8,11 @@ import {Message} from "./PublicRoom.tsx";
 
 export default function PrivateRoom() {
   const params = useParams();
-  const {userData} = useSession() || {userData: {_id: ""}};
+  const {userData} = useSession();
   const roomName = [params.id, userData._id].sort().join("_");
-  const room = usePrivateRoom(roomName) || {_id: ""}
+  const room = usePrivateRoom(roomName);
 
-  const {loading, error, data} = useQuery(GET_MESSAGES_BY_ROOM_ID, {variables: {room: room._id}});
+  const {loading, error, data} = useQuery(GET_MESSAGES_BY_ROOM_ID, {variables: {room: room?._id}});
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -27,7 +27,7 @@ export default function PrivateRoom() {
             )
         )}
 
-        <CreateMessage room={room._id}/>
+        {room && <CreateMessage room={room._id}/>}
       </div>
   )
 
