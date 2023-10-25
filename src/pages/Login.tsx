@@ -1,13 +1,13 @@
-import {Button} from "@material-tailwind/react";
+import {Button, Card, CardBody, CardFooter, Typography} from "@material-tailwind/react";
 import {useMutation} from '@apollo/client';
-import {NavLink} from "react-router-dom"
+import {NavLink, useNavigate} from "react-router-dom"
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import {toast} from "react-toastify";
 import Input from "../components/Input.tsx";
-import {useEffect, useState} from "react";
 import {LOGIN} from "../graphql/mutations.ts";
+import ValidationMessage from "../components/ValidationMessage.tsx";
 
 type LoginInput = {
   email: string;
@@ -19,8 +19,8 @@ export default function Login() {
   const [login] = useMutation(LOGIN);
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email().required(),
-    password: Yup.string().required(),
+    email: Yup.string().email('Provide a valid email').required("Provide an email"),
+    password: Yup.string().required('Password is required'),
   });
 
   const formOptions = {resolver: yupResolver(validationSchema)};
@@ -29,7 +29,7 @@ export default function Login() {
 
   const {errors} = formState;
 
-  const [authenticated, setAuthenticated] = useState(false)
+  const navigate = useNavigate();
 
   const _login = (data: LoginInput) => {
     toast.promise(
@@ -43,7 +43,7 @@ export default function Login() {
         }).then((res) => {
           if (res.data.login.token) {
             localStorage.setItem("token", res.data.login.token);
-            setAuthenticated(true);
+            navigate("/")
           } else {
             throw Error();
           }
@@ -56,31 +56,36 @@ export default function Login() {
     );
   };
 
-  useEffect(() => {
-    if (!authenticated) {
-      localStorage.removeItem("token");
-    }
-  });
-
   return (
       <div className="flex flex-col items-center justify-center h-screen">
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit(_login)}>
+        <Card className="mt-6 w-96">
+          <CardBody>
+            <Typography variant="h5" color="blue-gray" className="mb-2 text-center">
+              Welcome to Chateo!
+            </Typography>
+            <form onSubmit={handleSubmit(_login)} className="flex flex-col gap-4">
 
-          <Input name="email" type="email" register={register} placeholder="Email"/>
-          <div className="text-red-500 text-xs">
-            {errors.email?.message}
-          </div>
+              <div className="flex flex-col gap-1">
+                <Input name="email" type="email" register={register} placeholder="Email"/>
+                <ValidationMessage message={errors.email?.message}/>
+              </div>
 
-          <Input name="password" type="password" register={register} placeholder="Password"/>
-          <div className="text-red-500 text-xs">
-            {errors.password?.message}
-          </div>
+              <div className="flex flex-col gap-1">
+                <Input name="password" type="password" register={register} placeholder="Password"/>
+                <ValidationMessage message={errors.password?.message}/>
+              </div>
 
-          <Button color="blue" type="submit" ripple={true}>Login</Button>
-        </form>
+              <Button color="blue" size="lg" type="submit" ripple={true}>Login</Button>
+            </form>
 
-        <NavLink to={"/register"}>Register</NavLink>
+          </CardBody>
+          <CardFooter className="pt-0">
+            <Typography className="text-center">
+              Already have an account?{' '}
+              <NavLink className="underline underline-offset-2" to={"/register"}>Register</NavLink>
+            </Typography>
+          </CardFooter>
+        </Card>
       </div>
   );
 }

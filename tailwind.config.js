@@ -7,6 +7,11 @@ export default withMT({
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    colors: {
+      primary: '#A0E7E5',
+      secondary: '#FFAEBC',
+      accent: '#FBE7C6'
+    },
     extend: {},
   },
   plugins: [],
