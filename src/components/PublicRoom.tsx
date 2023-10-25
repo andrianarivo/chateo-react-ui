@@ -24,7 +24,7 @@ export default function PublicRoom() {
     loading,
     error,
   }] = useLazyQuery(GET_MESSAGES_BY_ROOM_ID);
-  const messageFeed = useSubscription(MESSAGE_FEED);
+  const messageFeed = useSubscription(MESSAGE_FEED, {variables: {room: params.id}});
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {

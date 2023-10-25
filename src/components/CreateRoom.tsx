@@ -19,7 +19,7 @@ export default function CreateRoom() {
 
   const formOptions = {resolver: yupResolver(validationSchema)};
 
-  const {register, handleSubmit, formState} = useForm(formOptions);
+  const {register, handleSubmit, formState, reset} = useForm(formOptions);
 
   const {errors} = formState;
 
@@ -47,6 +47,7 @@ export default function CreateRoom() {
       success: 'PublicRoom created',
       error: 'Error creating room'
     });
+    reset();
   }
   return (
       <form onSubmit={handleSubmit(_createRoom)} className="flex gap-2">

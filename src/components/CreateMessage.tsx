@@ -26,7 +26,7 @@ export default function CreateMessage({room}: CreateMessageProps) {
 
   const formOptions = {resolver: yupResolver(validationSchema)};
 
-  const {register, handleSubmit, formState} = useForm(formOptions);
+  const {register, handleSubmit, formState, reset} = useForm(formOptions);
 
   const {errors} = formState;
 
@@ -46,11 +46,12 @@ export default function CreateMessage({room}: CreateMessageProps) {
           error: 'Error creating message'
         }
     )
+    reset();
   }
 
   return (
       <form onSubmit={handleSubmit(_createMessage)}
-            className="flex gap-2 p-2 w-full bg-amber-50 shadow-md">
+            className="flex gap-2 p-2 w-full bg-white shadow-md">
 
         <div className="flex-1">
           <Textarea placeholder="Message" name="content" register={register}/>

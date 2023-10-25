@@ -1,8 +1,8 @@
 import {gql} from "@apollo/client";
 
 export const MESSAGE_FEED = gql`
-    subscription MessageFeed {
-        messageCreated {
+    subscription MessageFeed($room: ObjectId!) {
+        messageCreated(room: $room) {
             ... on MessageCreated {
                 entity {
                     _id

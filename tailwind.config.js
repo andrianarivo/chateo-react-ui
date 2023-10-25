@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import withMT from "@material-tailwind/react/utils/withMT";
+import colors from "tailwindcss/colors.js";
 
 export default withMT({
   content: [
@@ -8,9 +9,7 @@ export default withMT({
   ],
   theme: {
     colors: {
-      primary: '#A0E7E5',
-      secondary: '#FFAEBC',
-      accent: '#FBE7C6'
+      ...colors
     },
     extend: {},
   },

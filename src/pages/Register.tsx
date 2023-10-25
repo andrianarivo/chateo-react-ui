@@ -86,7 +86,7 @@ export default function Register() {
                 <ValidationMessage message={errors.password?.message}/>
               </div>
 
-              <Button color="blue" ripple={true} type="submit">Register</Button>
+              <Button color="blue" size="lg" ripple={true} type="submit">Register</Button>
             </form>
           </CardBody>
           <CardFooter className="pt-0">

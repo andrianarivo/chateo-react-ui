@@ -1,19 +1,27 @@
 import {useParams} from "react-router-dom";
 import usePrivateRoom from "../hooks/usePrivateRoom.ts";
 import CreateMessage from "./CreateMessage.tsx";
-import {useLazyQuery} from "@apollo/client";
+import {useLazyQuery, useSubscription} from "@apollo/client";
 import {GET_MESSAGES_BY_ROOM_ID} from "../graphql/queries.ts";
 import {Message} from "./PublicRoom.tsx";
 import {AuthContext} from "../pages/ProtectedRoutes.tsx";
 import {useContext, useEffect, useState} from "react";
 import MessageItem from "./MessageItem.tsx";
+import {MESSAGE_FEED} from "../graphql/subscriptions.ts";
 
 export default function PrivateRoom() {
   const userData = useContext(AuthContext)
   const params = useParams();
   const roomName = [params.id, userData?._id].sort().join("_");
   const room = usePrivateRoom(roomName);
+  const messageFeed = useSubscription(MESSAGE_FEED, {variables: {room: room._id}});
   const [messages, setMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    if (messageFeed.data) {
+      setMessages((messages: Message[]) => [...messages, messageFeed.data.messageCreated.entity]);
+    }
+  }, [messageFeed.data])
 
   const [getMessagesByRoomId, {
     loading,
