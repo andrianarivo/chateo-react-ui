@@ -3,7 +3,8 @@ export type InputProps = {
   name: string;
   placeholder: string;
   type?: string;
-  htmlAttributes?: any;
+  width?: string;
+  minWidth?: string;
 }
 
 export default function Input({
@@ -11,11 +12,13 @@ export default function Input({
                                 name,
                                 placeholder,
                                 type = 'text',
-                                htmlAttributes = {}
+                                width = 'full',
+                                minWidth = '[200px]',
+                                ...htmlAttributes
                               }: InputProps) {
   return (
       <div {...htmlAttributes}>
-        <div className="relative h-10 w-full min-w-[200px]">
+        <div className={`relative h-10 w-${width} min-w-${minWidth}`}>
           <input
               type={type}
               className="peer h-full w-full rounded-[7px] border border-gray-400 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-gray-400 focus:border-2 focus:border-blue-400 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
