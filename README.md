@@ -85,7 +85,7 @@ Express.js, GraphQL and MongoDB.
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://google.com)
+- [Live Demo Link](https://dev--astonishing-biscuit-7921d9.netlify.app/login)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -177,7 +177,7 @@ You can deploy this project using your own deployment solution.
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](../../issues/).
+Feel free to check the [issues page](https://github.com/andrianarivo/chateo-react-ui/issues/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

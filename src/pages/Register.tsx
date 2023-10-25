@@ -1,6 +1,6 @@
 import {useMutation} from "@apollo/client";
 import {Button, Card, CardBody, CardFooter, Typography} from "@material-tailwind/react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
@@ -20,6 +20,8 @@ export default function Register() {
 
   const [_register] = useMutation(REGISTER);
 
+  const navigate = useNavigate();
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Provide a valid email").required("Provide an email"),
     firstname: Yup.string().required("Provide a firstname"),
@@ -29,7 +31,7 @@ export default function Register() {
 
   const formOptions = {resolver: yupResolver(validationSchema)};
 
-  const {register, handleSubmit, formState} = useForm(formOptions);
+  const {register, handleSubmit, formState, reset} = useForm(formOptions);
 
   const {errors} = formState;
 
@@ -48,6 +50,8 @@ export default function Register() {
           if (!res.data.register.message.includes("Account created successfully.")) {
             throw Error();
           }
+          reset();
+          navigate('/login');
         }),
         {
           pending: 'loading...',
