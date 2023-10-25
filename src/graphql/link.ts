@@ -3,6 +3,10 @@ import {setContext} from "@apollo/client/link/context";
 import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
 import {createClient} from 'graphql-ws';
 import {getMainDefinition} from "@apollo/client/utilities";
+import {onError} from "@apollo/client/link/error";
+import {createBrowserHistory} from "history";
+
+const history = createBrowserHistory();
 
 const wsLink = new GraphQLWsLink(createClient({
   url: import.meta.env.VITE_GRAPHQL_WS_URI,
@@ -24,7 +28,23 @@ const authLink = setContext((_, {headers}) => {
   }
 });
 
-const mainLink = authLink.concat(httpLink);
+const errorLink = onError(({graphQLErrors, networkError}) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({message, locations, path}) => {
+          console.log(
+              `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(locations)}, Path: ${path}`
+          );
+          if (message.includes('Not authenticated.') || message.includes('jwt expired') || message.includes('invalid token')) {
+            localStorage.removeItem('token');
+            history.push('/login');
+            window.location.reload();
+          }
+        }
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
+const mainLink = errorLink.concat(authLink).concat(httpLink);
 
 const splitLink = split(
     ({query}) => {

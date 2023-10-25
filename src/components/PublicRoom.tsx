@@ -23,7 +23,7 @@ export default function PublicRoom() {
   const [getMessagesByRoomId, {
     loading,
     error,
-  }] = useLazyQuery(GET_MESSAGES_BY_ROOM_ID, {variables: {room: params.id}});
+  }] = useLazyQuery(GET_MESSAGES_BY_ROOM_ID);
   const messageFeed = useSubscription(MESSAGE_FEED);
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -34,10 +34,10 @@ export default function PublicRoom() {
   }, [messageFeed.data])
 
   useEffect(() => {
-    getMessagesByRoomId().then((res) => {
+    getMessagesByRoomId({variables: {room: params.id}}).then((res) => {
       setMessages(res.data.getMessagesByRoom.entities);
     });
-  }, []);
+  }, [params.id]);
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -46,7 +46,7 @@ export default function PublicRoom() {
       <div className={"flex flex-col h-screen justify-between"}>
 
         <div>
-          {messages.map((message: Message) => (
+          {messages && messages.map((message: Message) => (
                   <MessageItem key={message._id} message={message}/>
               )
           )}
