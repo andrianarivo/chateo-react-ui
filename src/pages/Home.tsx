@@ -18,16 +18,16 @@ export default function Home() {
                       className="text-3xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
                     Chateo!
                   </Typography>
-                  <Typography
+                  {userData && <Typography
                       className="mt-2 text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:underline">{userData?.firstname}
-                  </Typography>
+                  </Typography>}
                 </div>
                 <UserList userData={userData}/>
                 <CreateRoom/>
                 <RoomList/>
               </aside>
               <main
-                  className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-700">
+                  className="flex-1 h-screen overflow-x-hidden overflow-y-scroll">
                 <Outlet/>
               </main>
             </div>

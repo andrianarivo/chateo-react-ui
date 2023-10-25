@@ -6,6 +6,7 @@ import {GET_MESSAGES_BY_ROOM_ID} from "../graphql/queries.ts";
 import {Message} from "./PublicRoom.tsx";
 import {AuthContext} from "../pages/ProtectedRoutes.tsx";
 import {useContext} from "react";
+import MessageItem from "./MessageItem.tsx";
 
 export default function PrivateRoom() {
   const userData = useContext(AuthContext)
@@ -19,14 +20,14 @@ export default function PrivateRoom() {
   if (error) return `Error! ${error.message}`;
 
   return (
-      <div>
-        <h1>Private Room: {params.id}</h1>
-        {data.getMessagesByRoom.entities && data.getMessagesByRoom.entities.map((message: Message) => (
-                <div key={message._id}>
-                  <p>{message.content}{" "}<em>by {message.author.firstname}</em></p>
-                </div>
-            )
-        )}
+      <div className={"flex flex-col h-screen justify-between"}>
+
+        <div>
+          {data.getMessagesByRoom.entities && data.getMessagesByRoom.entities.map((message: Message) => (
+                  <MessageItem key={message._id} message={message}/>
+              )
+          )}
+        </div>
 
         {room && <CreateMessage room={room._id}/>}
       </div>
