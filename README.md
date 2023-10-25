@@ -85,7 +85,7 @@ Express.js, GraphQL and MongoDB.
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://dev--astonishing-biscuit-7921d9.netlify.app/login)
+- [Live Demo Link](https://astonishing-biscuit-7921d9.netlify.app/login)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
