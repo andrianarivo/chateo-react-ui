@@ -9,6 +9,7 @@ import Home from "./pages/Home.tsx";
 import PublicRoom from "./components/PublicRoom.tsx";
 import PrivateRoom from "./components/PrivateRoom.tsx";
 import {splitLink} from "./graphql/link.ts";
+import ProtectedRoutes from "./pages/ProtectedRoutes.tsx";
 
 const client = new ApolloClient({
   link: splitLink,
@@ -22,9 +23,11 @@ function App() {
         <BrowserRouter>
           <ApolloProvider client={client}>
             <Routes>
-              <Route path="/" element={<Home/>}>
-                <Route path="/room/:id" element={<PublicRoom/>}/>
-                <Route path="/user/:id" element={<PrivateRoom/>}/>
+              <Route path="/" element={<ProtectedRoutes/>}>
+                <Route path="/" element={<Home/>}>
+                  <Route path="/room/:id" element={<PublicRoom/>}/>
+                  <Route path="/user/:id" element={<PrivateRoom/>}/>
+                </Route>
               </Route>
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>

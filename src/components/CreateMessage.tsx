@@ -5,8 +5,9 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import {useMutation} from "@apollo/client";
 import {CREATE_MESSAGE} from "../graphql/mutations.ts";
-import useSession from "../hooks/useSession.ts";
 import {toast} from "react-toastify";
+import {AuthContext} from "../pages/ProtectedRoutes.tsx";
+import {useContext} from "react";
 
 type CreateMessageProps = {
   room: string | undefined;
@@ -15,7 +16,8 @@ type CreateMessageProps = {
 export default function CreateMessage({room}: CreateMessageProps) {
 
   const [createMessage] = useMutation(CREATE_MESSAGE);
-  const {userData} = useSession() || {userData: {_id: ""}};
+
+  const userData = useContext(AuthContext)
 
   const validationSchema = Yup.object().shape({
     content: Yup.string().required(),
@@ -33,7 +35,7 @@ export default function CreateMessage({room}: CreateMessageProps) {
             input: {
               content: data.content,
               room: room,
-              author: userData._id
+              author: userData?._id
             }
           }
         }),

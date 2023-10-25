@@ -1,15 +1,16 @@
 import {useParams} from "react-router-dom";
 import usePrivateRoom from "../hooks/usePrivateRoom.ts";
-import useSession from "../hooks/useSession.ts";
 import CreateMessage from "./CreateMessage.tsx";
 import {useQuery} from "@apollo/client";
 import {GET_MESSAGES_BY_ROOM_ID} from "../graphql/queries.ts";
 import {Message} from "./PublicRoom.tsx";
+import {AuthContext} from "../pages/ProtectedRoutes.tsx";
+import {useContext} from "react";
 
 export default function PrivateRoom() {
+  const userData = useContext(AuthContext)
   const params = useParams();
-  const {userData} = useSession();
-  const roomName = [params.id, userData._id].sort().join("_");
+  const roomName = [params.id, userData?._id].sort().join("_");
   const room = usePrivateRoom(roomName);
 
   const {loading, error, data} = useQuery(GET_MESSAGES_BY_ROOM_ID, {variables: {room: room?._id}});
