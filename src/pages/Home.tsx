@@ -12,7 +12,7 @@ export default function Home() {
         {userData => (
             <div className="flex items-center justify-center min-h-screen">
               <aside
-                  className="flex flex-col items-center gap-4 overflow-y-auto overflow-x-hidden w-64 h-screen px-4 py-8 bg-white border-r dark:bg-gray-800 dark:border-gray-600 shadow-lg">
+                  className="flex flex-col items-center gap-4 overflow-y-auto overflow-x-hidden w-64 h-screen px-4 py-8 bg-white border-r dark:bg-gray-800 dark:border-gray-600 shadow-lg scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#f7ab0a]/80">
                 <div className="flex flex-col items-center justify-center">
                   <Typography
                       className="text-3xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
@@ -27,7 +27,7 @@ export default function Home() {
                 <RoomList/>
               </aside>
               <main
-                  className="flex-1 h-screen overflow-x-hidden overflow-y-scroll">
+                  className="flex-1 h-screen overflow-hidden">
                 <Outlet/>
               </main>
             </div>

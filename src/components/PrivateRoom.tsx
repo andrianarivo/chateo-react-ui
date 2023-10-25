@@ -38,9 +38,10 @@ export default function PrivateRoom() {
   if (error) return `Error! ${error.message}`;
 
   return (
-      <div className={"flex flex-col h-screen justify-between"}>
+      <div className="flex flex-col h-screen justify-between">
 
-        <div>
+        <div
+            className="p-1 h-3/4 overflow-y-auto scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#f7ab0a]/80">
           {messages && messages.map((message: Message) => (
                   <MessageItem key={message._id} message={message}/>
               )

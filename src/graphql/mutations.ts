@@ -52,3 +52,13 @@ export const CREATE_MESSAGE = gql`
         }
     }
 `;
+
+export const LOGOUT = gql`
+    mutation Logout {
+        logout {
+            ... on Logout {
+                message
+            }
+        }
+    }
+`;

@@ -1,9 +1,9 @@
 import {Message} from "./PublicRoom.tsx";
 import {Typography} from "@material-tailwind/react";
 import {AuthContext} from "../pages/ProtectedRoutes.tsx";
-import {useContext} from "react";
+import {ComponentPropsWithRef, useContext} from "react";
 
-type MessageProps = {
+type MessageProps = ComponentPropsWithRef<any> & {
   message: Message;
 }
 
